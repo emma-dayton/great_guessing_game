@@ -8,4 +8,41 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+      <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+        <div class="card-header">Welcome to the Great Number Game!</div>
+          <div class="card-body">
+      		<h5 class="card-title">I am thinking of a number between 1 and 100</h5> <!-- take directly from session data, not route function -->
+          <p>Take a guess:</p>
+          <form action = "{{ url_for('try_num') }}" method = "post">
+          <input type='text' id='guess' name='guess' placeholder="Integers only please :)"></input>
+          <p></p>
+          <input type='submit' value='Make your guess!' class="btn btn-secondary"></input>
+          </form>
+          <p></p>
+          <a href="/play_again" class="btn btn-secondary">Play Again</a>
+        </div>
+      </div>
+      {% if 'guess' in session %}
+          {% if session['guess'] == session['num'] %}
+          <div class="card mb-3 text-white bg-success" style="max-width: 18rem;">
+            <div class="card-body">
+            <p>You win! {{session['num']}} was the correct answer :)</p>
+          {% endif %}
+          {% if session['guess'] > session['num'] %}
+          <div class="card mb-3 text-white bg-danger" style="max-width: 18rem;">
+            <div class="card-body">
+            <p>Too high. Guess again</p>
+          {% endif %}
+          {% if session['guess'] < session['num'] %}
+          <div class="card mb-3 text-black bg-warning" style="max-width: 18rem;">
+            <div class="card-body">
+            <p>Too low. Guess again</p>
+          {% endif %}
+          <p>num is: {{ session['num'] }}</p>
+          <p>guess is: {{ session['guess'] }}</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
